@@ -1,0 +1,13 @@
+@font-face {
+    @font-face {
+        font-family: 'Fredoka';
+        src: url('fonts/Fredoka-VariableFont_wdth,wght.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+      }
+}
+
+
+body {
+    font-family: 'Fredoka', sans-serif;
+}

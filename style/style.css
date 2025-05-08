@@ -1,0 +1,137 @@
+
+
+ :root {
+    --yellow: #FFCB05;
+    --blue: #3B4CCA;
+    --red: #E3350D;
+    --gray: #F2F2F2;
+    --text-dark: #2c2c2c;
+    --text-light: #ffffff;
+    --border-radius: 16px;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Fredoka', sans-serif;
+    background-color: var(--gray);
+    color: var(--text-dark);
+    padding: 2rem;
+  }
+  
+  /* HEADER */
+  header {
+    background-color: var(--blue);
+    color: var(--text-light);
+    padding: 1rem 2rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    
+  }
+
+.d-none {
+    display: none;
+}
+  
+
+header img {
+    width: 200px;
+    height: 200px;
+    flex-direction: column;
+}
+  
+  header h1 {
+    font-size: 60px;
+    letter-spacing: 2px;
+  }
+
+  .header-left{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .header-left img.logo {
+    width: 40px; /* oder wie groß dein Icon sein soll */
+    height: auto;
+  }
+
+  .header-left h1 {
+    font-size: 5rem;
+    margin: -34px;
+  }
+
+
+  .search-div {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  
+  #search-input {
+    width: 260px;
+    padding: 10px 35px 10px 15px;
+    font-size: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 25px;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  #search-input:focus {
+    border-color: #3b4cca; /* Pokémon-Blau */
+    box-shadow: 0 0 5px rgba(59, 76, 202, 0.5);
+  }
+  
+  #search-close {
+    position: absolute;
+    right: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #999;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+  }
+  
+  #search-close:hover {
+    color: #e74c3c;
+  }
+
+
+
+
+footer {
+    background-color: var(--blue);
+    color: var(--text-light);
+    padding: 2rem 0;
+    text-align: center;
+    border-radius: var(--border-radius);
+    margin-top: 3rem;
+  }
+
+
+
+footer p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  footer .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+
+
