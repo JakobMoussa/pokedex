@@ -1,14 +1,3 @@
-
-
- :root {
-    --yellow: #FFCB05;
-    --blue: #3B4CCA;
-    --red: #E3350D;
-    --gray: #F2F2F2;
-    --text-dark: #2c2c2c;
-    --text-light: #ffffff;
-    --border-radius: 16px;
-  }
   
   * {
     margin: 0;
@@ -17,11 +6,23 @@
   }
   
   body {
+    background-color: rosybrown;
     font-family: 'Fredoka', sans-serif;
     background-color: var(--gray);
     color: var(--text-dark);
     padding: 2rem;
   }
+
+
+ :root {
+  --yellow: #FFCB05;
+  --blue: #5161da;
+  --red: #E3350D;
+  --gray: #beb6b6b1;
+  --text-dark: #2c2c2c;
+  --text-light: #ffffff;
+  --border-radius: 16px;
+}
   
   /* HEADER */
   header {
@@ -56,7 +57,6 @@ header img {
   .header-left{
     display: flex;
     align-items: center;
-    gap: 10px;
   }
 
   .header-left img.logo {
@@ -71,19 +71,27 @@ header img {
 
 
   .search-div {
-    margin-top: 20px;
+    margin-left: 70px;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
   }
+
+  .search-icon {
+    position: absolute;
+    right: 12px;
+    width: 22px;
+    height: 22px;
+    pointer-events: none;
+  }
   
   #search-input {
-    width: 260px;
+    width: 450px;
     padding: 10px 35px 10px 15px;
     font-size: 1rem;
     border: 2px solid #ddd;
-    border-radius: 25px;
+    border-radius: 12px;
     outline: none;
     transition: all 0.3s ease;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -109,8 +117,6 @@ header img {
   }
 
 
-
-
 footer {
     background-color: var(--blue);
     color: var(--text-light);
@@ -119,8 +125,6 @@ footer {
     border-radius: var(--border-radius);
     margin-top: 3rem;
   }
-
-
 
 footer p {
     font-size: 1rem;
@@ -133,5 +137,19 @@ footer p {
     gap: 1rem;
   }
 
+.btn-container {
+  padding-top: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-
+  .add-more-btn {
+    display: flex;
+    border-radius: 10px;
+    border: none;
+    width: 250px;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+  }
