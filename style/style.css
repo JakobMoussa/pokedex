@@ -24,7 +24,7 @@
   --border-radius: 16px;
 }
   
-  /* HEADER */
+
   header {
     background-color: var(--blue);
     color: var(--text-light);
@@ -60,7 +60,7 @@ header img {
   }
 
   .header-left img.logo {
-    width: 40px; /* oder wie groß dein Icon sein soll */
+    width: 40px; 
     height: auto;
   }
 
@@ -98,7 +98,7 @@ header img {
   }
   
   #search-input:focus {
-    border-color: #3b4cca; /* Pokémon-Blau */
+    border-color: #3b4cca; 
     box-shadow: 0 0 5px rgba(59, 76, 202, 0.5);
   }
   
@@ -153,3 +153,9 @@ footer p {
     justify-content: center;
     align-items: center;
   }
+
+  .add-more-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+

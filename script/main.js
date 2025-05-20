@@ -14,13 +14,13 @@
     }
   });
 
-  // Funktion zum Löschen des Eingabefelds, wenn auf das "X" geklickt wird
+  // Wenn auf das "X" geklickt wird
   function clearInput() {
     searchInput.value = '';
     searchClose.classList.add('d-none');
     searchInput.focus();
   }
   
-  /*  ------------------------------   */
+
   
  
