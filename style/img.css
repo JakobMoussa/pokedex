@@ -7,6 +7,7 @@ main {
   .pokemon-card {
     position: relative;
     border-radius: 12px;
+    background-color: transparent;
   }
     
   ul li {
@@ -26,9 +27,8 @@ main {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         cursor: pointer;
         overflow: hidden;
-
-        background-color: white;
         padding: 120px;
+        
     }
 
     li:hover {
@@ -89,14 +89,20 @@ main {
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
+      overflow: hidden;  
     }
 
+     .background-img{
+        max-width: 320px;
+        max-height: 320px;
+        position: absolute;
+      }
     
    li .main-img {
       max-height: 150px;
       max-width: 150px;
-      object-fit: contain; 
+      object-fit: contain;
+      position: relative; 
     }
     
 
@@ -106,7 +112,210 @@ main {
       object-fit: contain;
       margin: 2px;
       padding: 4px;
-      border-radius: 6px;
+      border-radius: 22px;
       background-color: lightgray; 
     }
 
+
+    /*  Overlay   */
+
+    .pokemon-name {
+      text-align: center;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      cursor: pointer;
+      border: none;
+      background-color: transparent;
+    }
+    
+    .overlay-card {
+      width: 500px;
+      height: 630px;
+      border-radius: 24px;
+      overflow: hidden;
+      background: white;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      position: relative;
+    }
+    
+    .overlay-top {
+      position: relative;
+      padding: 20px;
+      color: white;
+      height: 220px;
+    }
+    
+    .overlay-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 16px;
+    }
+    
+    .overlay-bg-icon {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0.1;
+      height: 160px;
+      z-index: 0;
+    }
+    
+    .overlay-types {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+      z-index: 1;
+      position: relative;
+    }
+    
+    .type-btn {
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: 1px solid white;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      font-size: 14px;
+    }
+    
+    .overlay-img {
+      position: absolute;
+      bottom: -38px;
+      right: 60px;
+      height: 135px;
+      z-index: 2;
+    }
+    
+    .overlay-bottom {
+      font-size: large;
+      padding: 60px 20px 20px;
+      background: white;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+    }
+    
+    .overlay-tabs {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    
+    .overlay-tabs span.active {
+      border-bottom: 3px solid #68ae28;
+    }
+    
+    .overlay-info {
+      margin-top: 20px;
+      padding-left: 30px;
+      line-height: 2.1;
+      font-size: 17px;
+      color: #333;
+    }
+    
+    .info-row {
+      gap: 38px;
+      display: flex;
+      margin-bottom: 6px;
+    }
+
+    .row-design{
+      background-color: #f0f0f0; 
+      padding: 5px;            
+      border-radius: 5px;
+      margin: 3px;
+      display: inline-block;  
+    }
+
+    .about-text {
+      align-items: center;
+    }
+    
+    .overlay-nav {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      position: absolute;
+      bottom: 15px;
+      left: 0;
+    }
+    
+    .arrow-btn {
+      border: none;
+      border-radius: 50%;
+      background: linear-gradient(to bottom right, #ceb85d, #1eff6c);
+      color: #333;
+      padding: 14px;
+      font-size: 22px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.2s ease;
+    }
+
+    .arrow-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .arrow-btn:active {
+      transform: scale(0.95);
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+    
+    .evolution-chain {
+      display: flex;
+      justify-content: center;
+      gap: 2px;
+      flex-wrap: wrap;
+      margin-top: 39px;
+    }
+    
+    .evolution-stage {
+      background: #eee;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-weight: bold;
+    }
+
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: 140px 1fr 40px; /* Name | Balken | Wert */
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .stat-name {
+      text-align: left;
+      font-weight: bold;
+    }
+    
+    .stat-bar-container {
+      width: 100%;
+      height: 10px;
+      background-color: #eee;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    
+    .stat-bar-fill {
+      height: 100%;
+      width: 0%; 
+      background: linear-gradient(to right, #4CAF50, #81C784);
+      border-radius: 10px;
+      transition: width 0.6s ease;
+    }
+    
+    .stat-value {
+      text-align: right;
+      font-weight: 500;
+    }

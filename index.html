@@ -9,6 +9,13 @@
     <link rel="stylesheet" href="style/fonts/font.css">
 </head>
 <body onload="init()">
+
+    <div id="overlay-container" class="overlay d-none" onclick="closeOverlay()">
+        <div class="overlay-content" onclick="event.stopPropagation()">
+        
+          <div id="overlay-body"></div>
+        </div>
+      </div>      
     <header>
         <div class="header-left">
             <img src="./img/pokemon-logo.svg" alt="">
@@ -20,14 +27,12 @@
             <span id="search-close" class="pointer search-close d-none" title="clear" onclick="clearInput()">X</span>
         </div>
     </header>
-
     <main>
         <ul id="pokedex-list" class="pokemon-card"></ul>
         <div class="btn-container">
         <button id="add-more-btn" class="add-more-btn" onclick="morePokemon()">Add more</button>
         </div>
     </main>
-
     <footer>
         <div>© 2025 Developer Akademie GmbH</div>
     </footer>
