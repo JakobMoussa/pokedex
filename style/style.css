@@ -13,7 +13,6 @@
     padding: 2rem;
   }
 
-
  :root {
   --yellow: #FFCB05;
   --blue: #5161da;
@@ -23,8 +22,6 @@
   --text-light: #ffffff;
   --border-radius: 16px;
 }
-  
-
   header {
     background-color: var(--blue);
     color: var(--text-light);
@@ -41,7 +38,6 @@
 .d-none {
     display: none;
 }
-  
 
 header img {
     width: 200px;
@@ -68,7 +64,6 @@ header img {
     font-size: 5rem;
     margin: -34px;
   }
-
 
   .search-div {
     margin-left: 70px;
@@ -115,7 +110,6 @@ header img {
   #search-close:hover {
     color: #e74c3c;
   }
-
 
 footer {
     background-color: var(--blue);
@@ -186,4 +180,35 @@ footer p {
   .d-none {
     display: none;
   }
+  
+
+  .loader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    background-color: rgba(255, 255, 255, 0.353);
+    padding: 20px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .loader-img {
+    width: 200px;
+    height: 200px;
+    animation: spin 1.5s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .d-none {
+    display: none;
+  }
+  
   

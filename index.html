@@ -7,12 +7,12 @@
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="style/img.css">
     <link rel="stylesheet" href="style/fonts/font.css">
+    <link rel="stylesheet" href="style/responsive.css">
 </head>
 <body onload="init()">
 
     <div id="overlay-container" class="overlay d-none" onclick="closeOverlay()">
         <div class="overlay-content" onclick="event.stopPropagation()">
-        
           <div id="overlay-body"></div>
         </div>
       </div>      
@@ -31,6 +31,9 @@
         <ul id="pokedex-list" class="pokemon-card"></ul>
         <div class="btn-container">
         <button id="add-more-btn" class="add-more-btn" onclick="morePokemon()">Add more</button>
+        </div>
+        <div id="loader" class="loader d-none">
+            <img src="./img/pokemon-logo.svg" alt="Loading..." class="loader-img">
         </div>
     </main>
     <footer>

@@ -1,21 +1,21 @@
 const typeColors = {
-    fire: '#fc6c6d',
-    water: '#5089bd',  
-    grass: '#2f947c',
-    electric: '#F8D030',
+    fire: '#f76162cc',
+    water: '#2c80cdc4',  
+    grass: '#3eb699cf',
+    electric: '#f1c71dcc',
     ice: '#98D8D8',
-    psychic: '#F85888',
+    psychic: '#f85888d4',
     dark: '#705848',
-    fairy: '#EE99AC',
-    fighting: '#C03028',
-    poison: '#A040A0',
+    fairy: '#ee99ac80',
+    fighting: '#de332ac4',
+    poison: '#d36ad3db',
     ground: '#E0C068',
     rock: '#B8A038',
-    bug: '#7d8822',
+    bug: '#7d8822ad',
     ghost: '#705898',
     steel: '#B8B8D0',
     dragon: '#7038F8',
-    normal: '#7a7a42'
+    normal: '#7f7f3dd1'
   };
 
   let offset = 0;
@@ -50,38 +50,56 @@ const typeColors = {
           const name = pokemon.name;
           const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg`;
           const types = pokemon.types.map(type => type.type.name);
-  
           const cardHTML = getPokemonCardTemplate(id, name, imageUrl, types);
           container.innerHTML += cardHTML;
         });
       })
       .catch(err => console.error('Fehler beim Nachladen:', err));
+  }
 
+  function showLoader() {
+    document.getElementById('loader').classList.remove('d-none');
+  }
+  
+  function hideLoader() {
+    document.getElementById('loader').classList.add('d-none');
   }
   
   async function fetchPokemons(container) {
+    showLoader();
     try {
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`);
+      const response = await fetch(getPokemonListUrl());
       const data = await response.json();
-      const pokemonList = await Promise.all(
-        data.results.map(async (pokemon) => {
-          const ressponse = await fetch(pokemon.url);
-          return await ressponse.json();
-        })
-      );
-
+      const pokemonList = await loadPokemonDetails(data.results);
+  
       allPokemon = pokemonList;
       setAllPokemon(pokemonList);
       renderPokemons(pokemonList, container);
-
-      
-      if (offset >= maxPokemon) {
-        document.getElementById('add-more-btn').style.display = 'none';
-      }
+      toggleLoadMoreButton();
     } catch (error) {
       console.error('Fehler beim Laden der Pokémon:', error);
+    } finally {
+      hideLoader();
     }
-
+  }
+  
+  function getPokemonListUrl() {
+    return `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`;
+  }
+  
+  async function loadPokemonDetails(pokemonArray) {
+    return Promise.all(
+      pokemonArray.map(async (pokemon) => {
+        const res = await fetch(pokemon.url);
+        return await res.json();
+      })
+    );
+  }
+  
+  function toggleLoadMoreButton() {
+    const btn = document.getElementById('add-more-btn');
+    if (offset >= maxPokemon) btn.style.display = 'none';
+    else btn.style.display = 'inline';
   }
 
 

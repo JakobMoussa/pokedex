@@ -1,20 +1,20 @@
     function renderPokemons(pokemons, container) {
     container.innerHTML = '';
   
-    pokemons.forEach(pokemon => {
+    for (let i = 0; i < pokemons.length; i++) {
+      const pokemon = pokemons[i];
       const id = pokemon.id;
       const name = pokemon.name;
       const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`;
       const types = pokemon.types.map(type => type.type.name);
       container.innerHTML += getPokemonCardTemplate(id, name, imageUrl, types);
-    });
+    }
   }
 
   function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
   
- 
   function getPokemonCardTemplate(id, name, imageUrl, types) {
     const primaryType = types [0];
     const bgColor = typeColors[primaryType] || '#ccc';
@@ -35,10 +35,6 @@
       </li>
     `;
   }
-
-    /*  ------------------------------   */
-  
-
   function getTypeIconTemplate(type) {
     const color = typeColors[type] || '#ccc';
     return `
@@ -50,16 +46,12 @@
         style="background-color: ${color}"
     `;
   }
-
-     /*  ------------------------------   */
-
 function showOverlay(event, name, id) {
   fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
     .then(res => res.json())
     .then(pokemon => {
       const overlayContainer = document.getElementById('overlay-container');
       const overlayBody = document.getElementById('overlay-body');
-
       overlayBody.innerHTML = getOverlayTemplate(pokemon);
       overlayContainer.classList.remove('d-none');
     })
@@ -75,7 +67,6 @@ function getOverlayTemplate(pokemon) {
   const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`;
   const bgColor = typeColors[pokemon.types[0].type.name] || '#ccc';
 
-  // About Info
   const aboutHTML = `
     <div class="info-row"><strong class="row-design">Species:</strong><span class="about-text">${capitalize(pokemon.species.name)}</span></div>   
     <div class="info-row"><strong class="row-design">Height:</strong><span class="about-text">${(pokemon.height / 10).toFixed(2)} m</span></div>
@@ -97,7 +88,6 @@ function getOverlayTemplate(pokemon) {
         </div>
         <img src="${imageUrl}" class="overlay-img">
       </div>
-
       <div class="overlay-bottom">
         <div class="overlay-tabs">
           <span class="tab-btn active" onclick="switchTab(event, 'about', ${id})">About</span>
@@ -120,65 +110,15 @@ function switchTab(event, tabName, pokemonId) {
   const container = document.getElementById('overlay-info');
   if (!container) return;
 
-  // Tab-Button aktivieren
-  document.querySelectorAll('.overlay-tabs .tab-btn').forEach(btn => btn.classList.remove('active'));
-  event.target.classList.add('active');
-
   fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
     .then(res => res.json())
     .then(pokemon => {
       if (tabName === 'about') {
-        container.innerHTML = `
-          <div class="info-row"><strong class="row-design">Species:</strong><span>${capitalize(pokemon.species.name)}</span></div>   
-          <div class="info-row"><strong class="row-design">Height:</strong><span>${(pokemon.height / 10).toFixed(2)} m</span></div>
-          <div class="info-row"><strong class="row-design">Weight:</strong><span>${(pokemon.weight / 10).toFixed(1)} kg</span></div>
-          <div class="info-row"><strong class="row-design">Abilities:</strong><span>${pokemon.abilities.map(a => capitalize(a.ability.name)).join(', ')}</span></div>
-        `;
-      }
-
-      else if (tabName === 'stats') {
-        const statLabels = {
-          'hp': 'HP',
-          'attack': 'Attack',
-          'defense': 'Defense',
-          'special-attack': 'Special Attack',
-          'speed': 'Speed'
-        };
-
-        const usedStats = new Set();
-        let statsHTML = '';
-
-        pokemon.stats.forEach(stat => {
-          const statName = stat.stat.name;
-          if (usedStats.has(statName)) return;
-          usedStats.add(statName);
-
-          const value = stat.base_stat;
-          const percent = Math.min((value / 150) * 100, 100).toFixed(1);
-          const label = statLabels[statName] || capitalize(statName);
-
-          statsHTML += `
-            <div class="stat-row">
-              <div class="stat-name">${label}</div>
-              <div class="stat-bar-container">
-                <div class="stat-bar-fill" style="width: 0%" data-target="${percent}%"></div>
-              </div>
-            </div>
-          `;
-        });
-
-        container.innerHTML = statsHTML;
-        setTimeout(() => {
-          document.querySelectorAll('.stat-bar-fill').forEach(bar => {
-            const target = bar.getAttribute('data-target');
-            bar.style.width = target;
-          });
-        }, 50);
-      }
-
-      else if (tabName === 'evo') {
-        container.innerHTML = `<div class="info-row"><em>Loading evolution chain...</em></div>`;
-        loadEvolutionChain(pokemon.species.url, container);
+        renderAboutTab(container, pokemon);
+      } else if (tabName === 'stats') {
+        renderStatsTab(container, pokemon);
+      } else if (tabName === 'evo') {
+        renderEvoTab(container, pokemon);
       }
     })
     .catch(err => {
@@ -187,37 +127,126 @@ function switchTab(event, tabName, pokemonId) {
     });
 }
 
+function setActiveTab(clickedButton) {
+  const buttons = document.getElementsByClassName('tab-btn');
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].classList.remove('active');
+  }
+  clickedButton.classList.add('active');
+}
+
+function renderAboutTab(container, pokemon) {
+  container.innerHTML = `
+    <div class="info-row"><strong class="row-design">Species:</strong><span>${capitalize(pokemon.species.name)}</span></div>   
+    <div class="info-row"><strong class="row-design">Height:</strong><span>${(pokemon.height / 10).toFixed(2)} m</span></div>
+    <div class="info-row"><strong class="row-design">Weight:</strong><span>${(pokemon.weight / 10).toFixed(1)} kg</span></div>
+    <div class="info-row"><strong class="row-design">Abilities:</strong><span>${pokemon.abilities.map(a => capitalize(a.ability.name)).join(', ')}</span></div>
+  `;
+}
+
+function renderStatsTab(container, pokemon) {
+  const statsHTML = buildStatsHTML(pokemon);
+  container.innerHTML = statsHTML;
+  animateStatBars();
+}
+
+function buildStatsHTML(pokemon) {
+  const statLabels = {
+    'hp': 'HP',
+    'attack': 'Attack',
+    'defense': 'Defense',
+    'special-attack': 'Special Attack',
+    'speed': 'Speed'
+  };
+
+  const usedStats = {};
+  let html = '';
+  const stats = pokemon.stats;
+
+  for (let i = 0; i < stats.length; i++) {
+    const stat = stats[i];
+    const statName = stat.stat.name;
+    if (usedStats[statName]) continue;
+    usedStats[statName] = true;
+
+    const value = stat.base_stat;
+    const percent = Math.min((value / 150) * 100, 100).toFixed(1);
+    const label = statLabels[statName] || capitalize(statName);
+
+    html += createStatRow(label, percent);
+  }
+
+  return html;
+}
+
+function createStatRow(label, percent) {
+  return `
+    <div class="stat-row">
+      <div class="stat-name">${label}</div>
+      <div class="stat-bar-container">
+        <div class="stat-bar-fill" style="width: 0%" data-target="${percent}%"></div>
+      </div>
+    </div>
+  `;
+}
+
+function animateStatBars() {
+  setTimeout(() => {
+    const bars = document.getElementsByClassName('stat-bar-fill');
+    for (let i = 0; i < bars.length; i++) {
+      const target = bars[i].getAttribute('data-target');
+      bars[i].style.width = target;
+    }
+  }, 50);
+}
+
+function renderEvoTab(container, pokemon) {
+  container.innerHTML = `<div class="info-row"><em>Loading evolution chain...</em></div>`;
+  loadEvolutionChain(pokemon.species.url, container);
+}
+
 function loadEvolutionChain(speciesUrl, container) {
   fetch(speciesUrl)
     .then(res => res.json())
-    .then(speciesData => {
-      return fetch(speciesData.evolution_chain.url);
-    })
-    .then(res => res.json())
-    .then(evolutionData => {
-      const evolutionChain = [];
-      let current = evolutionData.chain;
-
-      // Evolutionskette durchlaufen
-      while (current) {
-        evolutionChain.push(capitalize(current.species.name));
-        current = current.evolves_to[0];
-      }
-
-      container.innerHTML = `
-        <div class="info-row"><strong>Evolution Chain:</strong></div>
-        <div class="evolution-chain">
-          ${evolutionChain.map(name => `<span class="evolution-stage">${name}</span>`).join(' → ')}
-        </div>
-      `;
-    })
-    .catch(err => {
-      console.error('Fehler beim Laden der Evolution Chain:', err);
-      container.innerHTML = `<div class="info-row"><em>Fehler beim Laden der Evolution.</em></div>`;
-    });
+    .then(speciesData => fetchEvolutionChain(speciesData.evolution_chain.url, container))
+    .catch(err => handleEvoError(container, err));
 }
 
- /*  ------------------------------   */
+function fetchEvolutionChain(evoUrl, container) {
+  fetch(evoUrl)
+    .then(res => res.json())
+    .then(evolutionData => {
+      const chain = parseEvolutionChain(evolutionData.chain);
+      renderEvolutionChain(chain, container);
+    })
+    .catch(err => handleEvoError(container, err));
+}
+
+function parseEvolutionChain(chainNode) {
+  const chain = [];
+  let current = chainNode;
+
+  while (current) {
+    chain.push(capitalize(current.species.name));
+    current = current.evolves_to[0];
+  }
+
+  return chain;
+}
+
+function renderEvolutionChain(chain, container) {
+  container.innerHTML = `
+    <div class="info-row"><strong>Evolution Chain:</strong></div>
+    <div class="evolution-chain">
+      ${chain.map(name => `<span class="evolution-stage">${name}</span>`).join(' → ')}
+    </div>
+  `;
+}
+
+function handleEvoError(container, err) {
+  console.error('Fehler beim Laden der Evolution Chain:', err);
+  container.innerHTML = `<div class="info-row"><em>Fehler beim Laden der Evolution.</em></div>`;
+}
 
 function showPreviousPokemon(currentId) {
   let prevId = currentId - 1;
@@ -236,10 +265,6 @@ function closeOverlay() {
   overlayContainer.classList.add('d-none');
   document.getElementById('overlay-body').innerHTML = '';
 }
-
-    
-
- /*  ------------------------------   */
        
   function init() {
     const container = document.getElementById('pokedex-list');
