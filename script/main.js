@@ -1,29 +1,31 @@
 let allPokemon = [];
 
-const input = document.getElementById('search-input');
-const closeBtn = document.getElementById('search-close');
-const searchIcon = document.getElementById('search-icon');
+let input = document.getElementById('search-input');
+let closeBtn = document.getElementById('search-close');
+let searchIcon = document.getElementById('search-icon');
 
-input.addEventListener('input', function () {
-  let textInside = input.value !== '';
+input.oninput = onSearchInput;
 
-  if (textInside) {
-    closeBtn.style.display = 'inline';
-    searchIcon.style.display = 'none';
+function onSearchInput() {
+  const value = input.value;
+  const hasText = value !== '';
+
+  closeBtn.style.display = hasText ? 'inline' : 'none';
+  searchIcon.style.display = hasText ? 'none' : 'inline';
+
+  if (value.length >= 3) {
+    filterPokemon(value);
   } else {
-    closeBtn.style.display = 'none';
-    searchIcon.style.display = 'inline';
+    renderPokemons(allPokemon, document.getElementById('pokedex-list'));
   }
-
-  filterPokemon();
-});
+}
 
 function setAllPokemon(pokemonArray) {
   allPokemon = pokemonArray;
 }
 
-function filterPokemon() {
-  const searchTerm = input.value.toLowerCase();
+function filterPokemon(term) {
+  const searchTerm = term.toLowerCase();
   const filtered = allPokemon.filter(pokemon =>
     pokemon.name.toLowerCase().includes(searchTerm)
   );

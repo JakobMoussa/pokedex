@@ -2,9 +2,10 @@ main {
     display: grid;
     justify-content: center;
     align-items: center;
-}
+  }
   
   .pokemon-card {
+    max-width: 1920px;
     position: relative;
     border-radius: 12px;
     background-color: transparent;
@@ -65,7 +66,6 @@ main {
         font-weight: 700;
     }
 
-    
     .li-footer {
         height: 54px;
         background-color: var(--blue);
@@ -209,7 +209,7 @@ main {
     .overlay-info {
       margin-top: 20px;
       padding-left: 30px;
-      line-height: 2.1;
+      line-height: 2;
       font-size: 17px;
       color: #333;
     }
@@ -256,6 +256,11 @@ main {
         align-items: center;
         justify-content: center;
       }
+
+      .arrow-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
       
       .arrow-btn:hover {
         background-color: rgba(255, 255, 255, 0.2);
@@ -267,7 +272,6 @@ main {
         transform: scale(0.95);
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       }
-  
 
     .arrow-btn:hover {
       transform: scale(1.1);
@@ -295,10 +299,9 @@ main {
       font-weight: bold;
     }
 
-
     .stat-row {
       display: grid;
-      grid-template-columns: 140px 1fr 40px; /* Name | Balken | Wert */
+      grid-template-columns: 140px 1fr 40px;
       align-items: center;
       gap: 8px;
     }
